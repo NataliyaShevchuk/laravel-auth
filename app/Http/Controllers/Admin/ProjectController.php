@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -13,7 +16,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $users = Project::all();
+
+        return view('dashboard', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -23,7 +30,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
@@ -32,9 +39,19 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        //
+        $secureData = $request->validate();
+        
+        $moreData = $request->all();
+
+
+        $project = new Project();
+        // Prende ogni chiave dell'array associativo e ne assegna il valore all'istanza del prodotto
+        $project->fill($moreData);
+        $project->save();
+
+        return redirect()->route("projects.show", $project->id);
     }
 
     /**
@@ -45,7 +62,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('projects.show', compact('project'));
     }
 
     /**
@@ -56,7 +75,11 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::find($id);
+
+        return view('projects.create', [
+            'project' => $project
+        ]);
     }
 
     /**
@@ -68,7 +91,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return redirect()->route("projects.show", $project->id);
     }
 
     /**
@@ -79,6 +104,10 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        $project->delete();
+
+        return redirect()->route("dashboard");
     }
 }

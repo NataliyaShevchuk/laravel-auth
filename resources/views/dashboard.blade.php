@@ -15,8 +15,12 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <div class="col-12 py-3">
+                    <button type="submit" class="btn btn-primary"><a class="text-decoration-none text-white" href="{{ route('projects.create')}}">Create a project</a></button>
                 </div>
-            </div>
+                </div>
+            </div>    
         </div>
     </div>
 </div>
