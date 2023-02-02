@@ -41,7 +41,7 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        $secureData = $request->validate();
+        // $secureData = $request->validate();
         
         $moreData = $request->all();
 
