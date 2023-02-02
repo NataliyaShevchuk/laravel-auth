@@ -87,7 +87,8 @@
                 </div>
                 
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary"><a href="{{route('projects.show')}}">Submit</a></button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{-- <a href="{{route('projects.show')}}" --}}
                 </div>
 
 
