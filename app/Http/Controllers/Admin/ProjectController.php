@@ -41,6 +41,7 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        //commentato perchè entra in conflitto 
         // $secureData = $request->validate();
         
         $moreData = $request->all();
@@ -108,6 +109,6 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->route("dashboard");
+        return redirect()->route("projects.show", $project->id);
     }
 }
