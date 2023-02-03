@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -16,10 +18,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $users = Project::all();
+        $project = Project::all();
 
-        return view('dashboard', [
-            'users' => $users
+        return view('projects.index', [
+            'project' => $project
         ]);
     }
 
@@ -41,15 +43,31 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //commentato perchè entra in conflitto 
-        // $secureData = $request->validate();
+
+        $secureData = $request->validate();
         
-        $moreData = $request->all();
+        // $moreData = $request->all();
 
 
         $project = new Project();
         // Prende ogni chiave dell'array associativo e ne assegna il valore all'istanza del prodotto
-        $project->fill($moreData);
+        $project->fill($secureData);
+        $project->save();
+
+        // carico il file SOLO se ne ricevo uno
+        if (key_exists("cover_img", $secureData)) {
+            // carico il nuovo file
+            // salvo in una variabile temporanea il percorso del nuovo file
+            $path = Storage::put("projects", $secureData["cover_img"]);
+
+            // Dopo aver caricato la nuova immagine, PRIMA di aggiornare il db,
+            // cancelliamo dallo storage il vecchio file.
+            // $post->cover_img // vecchio file
+            Storage::delete($project->cover_img);
+        }
+
+        $project = new Project();
+        $project->cover_img = $path;
         $project->save();
 
         return redirect()->route("projects.show", $project->id);
@@ -65,7 +83,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        return view('projects.show', compact('project'));
+        return view('projects.index', compact('project'));
     }
 
     /**
@@ -107,8 +125,12 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
+        if ($project->cover_img) {
+            Storage::delete($project->cover_img);
+        }
+
         $project->delete();
 
-        return redirect()->route("projects.show", $project->id);
+        return redirect()->route("projects.index", $project->id);
     }
 }

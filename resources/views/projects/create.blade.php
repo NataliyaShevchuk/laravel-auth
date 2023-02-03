@@ -18,9 +18,12 @@
 
     <div class="row">
         <div class="col-12 mt-5 justify-content-center">
-            <form action=" {{route('projects.store') }} " class="row g-3" method="POST">
+
+        {{-- INIZIO FORM --}}
+            <form action=" {{route('projects.store') }} " class="row g-3" method="POST" enctype="multipart/form-data">
                 @csrf
 
+        {{-- INPUT NOME --}}
                 <div class="col-md-6">
                     <label for="text" class="form-label">Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @elseif(old('name')) is-valid @enderror" id="" name="name" value="{{ $errors->has('name') ? '' : old('name') }}">
@@ -36,12 +39,12 @@
                     </div>
                     @enderror
 
-
-
                 </div>
+
+        {{-- INPUT IMMAGINE --}}
                 <div class="col-md-6">
                     <label for="" class="form-label">Cover Image</label>
-                    <input type="url"  class="form-control @error('cover_img') is-invalid @elseif(old('cover_img')) is-valid @enderror" name="cover_img" value="{{ $errors->has('cover_img') ? '' : old('cover_img') }}">
+                    <input type="file"  class="form-control @error('cover_img') is-invalid @elseif('cover_img') is-valid @enderror" name="cover_img" >
                     {{-- Messaggio  --}}
                     @error('cover_img')
                     <div class="invalid-feedback">
@@ -52,8 +55,9 @@
                         Nice work dude!
                     </div>
                     @enderror
-
                 </div>
+
+        {{-- INPUT GITHUB LINK --}}
                 <div class="col-12">
                     <label for="" class="form-label">Github Link</label>
                     <input type="url" class="form-control @error('github_link') is-invalid @elseif(old('github_link')) is-valid @enderror" name="github_link" value="{{ $errors->has('github_link') ? '' : old('github_link') }}" id="" placeholder="github_link" name="github_link" value="{{ $errors->has('github_link') ? '' : old('github_link') }}">
@@ -69,6 +73,8 @@
                     </div>
                     @enderror
                 </div>
+
+        {{-- INPUT DESCRIZIONE --}}
                 <div class="col-12">
                     <label for="" class="form-label">Description</label>
                     <textarea type="text" cols="30" rows="5" class="form-control  @error('description') is-invalid @enderror" placeholder="Description" name="description">{{ old('description') }}</textarea>
@@ -85,9 +91,15 @@
                     @enderror
 
                 </div>
-                
+        {{-- PULSANTI: SUBMIT E BACK TO DASHBOARD --}}
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <button class="btn btn-warning m-3">
+                        <a href="{{route('dashboard')}}" class="text-decoration-none text-white">
+                            Back to Dashboard
+                        </a>
+                    </button>
                     {{-- <a href="{{route('projects.show')}}" --}}
                 </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreProjectRequest extends FormRequest
             "name" => "required|min:8|max:255",
             "description" => "required|string",
             "github_link" => "string|url",
-            "cover_img" => "string|url"
+            "cover_img" => "required|image|max:1024"
         ];
     }
 
@@ -35,7 +36,7 @@ class StoreProjectRequest extends FormRequest
         return [
             "name.required" => "Il titolo è obbligatorio",
             "name.max" =>  "Il titolo deve avere massimo :max caratteri",
-            "cover_img.required" =>  "Inscerisci il link dell'immagine, è obbligatorio",
+            "cover_img.required" =>  "Inscerisci il file dell'immagine, è obbligatorio",
             "description.required" => "Il contenuto del post è obbligatorio",
         ];
     }

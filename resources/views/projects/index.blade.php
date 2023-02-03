@@ -10,21 +10,22 @@
         </button>
     </div>
     <div class="row mx-5">
-                <div class="col-6 my-3">
+        @foreach($project as $single_project)
+                <div class="col-3 my-3">
                     <div class="card">
-                        <img src="{{ asset('storage/' . $project['cover_img']) }}" class="card-img-top" alt="...">
+                        <img src="{{ $single_project->cover_img }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{$project->name}}</h5>
-                            <p class="card-text">{{$project->description}}</p>
-                            <a href="{{$project->github_link}}" class="btn btn-primary">Github Link</a>
-                            <button class="btn btn-info"> <a href="{{route('projects.edit', $project->id)}}" class="text-decoration-none">Modifica</a></button>
+                            <h5 class="card-title">{{$single_project->name}}</h5>
+                            <p class="card-text">{{$single_project->description}}</p>
+                            <a href="{{$single_project->github_link}}" class="btn btn-primary">Github Link</a>
+                            <button class="btn btn-info"> <a href="{{route('projects.edit', $single_project->id)}}" class="text-decoration-none">Modify</a></button>
                             {{-- <button class="btn btn-danger"> <a href="{{route('projects.destroy')}}" class="text-decoration-none"><i class="fas fa-trash"></i></a></button> --}}
-                            <form action="{{ route('projects.destroy', $project->id) }}" method="POST" id="form-delete">
+                            <form action="{{ route('projects.destroy', $single_project->id) }}" method="POST" id="form-delete">
                                 @csrf()
                                 @method('delete')
 
                                 <button class="btn btn-danger my-3">
-                                    <i class="fas fa-trash w-3">Elimina</i>
+                                    <i class="fas fa-trash w-3">Delete</i>
                                 </button>
                             </form>
                             </div>
@@ -50,6 +51,7 @@
                         </div>
                     </div>
                 </div>
+        @endforeach
     </div>
 </main>
 @endsection

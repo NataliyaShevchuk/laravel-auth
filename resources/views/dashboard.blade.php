@@ -17,7 +17,8 @@
                     {{ __('You are logged in!') }}
 
                     <div class="col-12 py-3">
-                    <button type="submit" class="btn btn-primary"><a class="text-decoration-none text-white" href="{{ route('projects.create')}}">Create a project</a></button>
+                    <button type="submit" class="btn btn-primary"><a class="text-decoration-none text-white" href="{{ route('projects.create')}}">Create a new project</a></button>
+                    <button type="submit" class="btn btn-success mx-3"><a class="text-decoration-none text-white" href="{{ route('projects.index')}}">Show all projects</a></button>
                 </div>
                 </div>
             </div>    

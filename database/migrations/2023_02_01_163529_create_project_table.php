@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->text('description');
-            $table->string('cover_img');
+            $table->file('cover_img');
             $table->string('github_link');
         });
     }
