@@ -12,7 +12,7 @@
     <div class="row mx-5">
                 <div class="col-6 my-3">
                     <div class="card">
-                        <img src="{{ asset('storage/' . $project['cover_img']) }}" class="card-img-top" alt="...">
+                        <img src="{{ asset('storage/' . $project['new_cover_img']) }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{$project->name}}</h5>
                             <p class="card-text">{{$project->description}}</p>

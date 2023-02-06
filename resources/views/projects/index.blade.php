@@ -11,9 +11,9 @@
     </div>
     <div class="row mx-5">
         @foreach($project as $single_project)
-                <div class="col-3 my-3">
+                <div class="col-3 my-3 ">
                     <div class="card">
-                        <img src="{{ $single_project->cover_img }}" class="card-img-top" alt="...">
+                        <img src="http://localhost/storage/{{$single_project->new_cover_img }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{$single_project->name}}</h5>
                             <p class="card-text">{{$single_project->description}}</p>
@@ -28,7 +28,7 @@
                                     <i class="fas fa-trash w-3">Delete</i>
                                 </button>
                             </form>
-                            </div>
+                            
 
                             <script>
                                   // recuperiamo l'elemnto html del form

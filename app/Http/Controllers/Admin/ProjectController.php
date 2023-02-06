@@ -44,15 +44,14 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
 
-        $secureData = $request->validate();
+        $secureData = $request->validated();
         
         // $moreData = $request->all();
 
 
-        $project = new Project();
         // Prende ogni chiave dell'array associativo e ne assegna il valore all'istanza del prodotto
-        $project->fill($secureData);
-        $project->save();
+
+        // $project->save();
 
         // carico il file SOLO se ne ricevo uno
         if (key_exists("cover_img", $secureData)) {
@@ -60,14 +59,17 @@ class ProjectController extends Controller
             // salvo in una variabile temporanea il percorso del nuovo file
             $path = Storage::put("projects", $secureData["cover_img"]);
 
+
             // Dopo aver caricato la nuova immagine, PRIMA di aggiornare il db,
             // cancelliamo dallo storage il vecchio file.
             // $post->cover_img // vecchio file
-            Storage::delete($project->cover_img);
+
         }
 
         $project = new Project();
         $project->cover_img = $path;
+        $project->new_cover_img = $path;
+        $project->fill($secureData);
         $project->save();
 
         return redirect()->route("projects.show", $project->id);
@@ -83,7 +85,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        return view('projects.index', compact('project'));
+        return view('projects.show', compact('project'));
     }
 
     /**

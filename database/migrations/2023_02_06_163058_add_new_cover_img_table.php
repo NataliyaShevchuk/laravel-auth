@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->file('cover_img')->nullable();
-            $table->string('github_link')->nullable();
+        Schema::table('projects', function (Blueprint $table) {
+            $table->text('new_cover_img')->nullable();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::table('projects', function (Blueprint $table) {
+            //
+        });
     }
 };
