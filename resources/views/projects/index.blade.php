@@ -19,7 +19,7 @@
                             <p class="card-text">{{$single_project->description}}</p>
                             <a href="{{$single_project->github_link}}" class="btn btn-primary">Github Link</a>
                             <button class="btn btn-info"> <a href="{{route('projects.edit', $single_project->id)}}" class="text-decoration-none">Modify</a></button>
-                            {{-- <button class="btn btn-danger"> <a href="{{route('projects.destroy')}}" class="text-decoration-none"><i class="fas fa-trash"></i></a></button> --}}
+
                             <form action="{{ route('projects.destroy', $single_project->id) }}" method="POST" id="form-delete">
                                 @csrf()
                                 @method('delete')

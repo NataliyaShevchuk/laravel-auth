@@ -68,7 +68,6 @@ class ProjectController extends Controller
 
         $project = new Project();
         $project->cover_img = $path;
-        $project->new_cover_img = $path;
         $project->fill($secureData);
         $project->save();
 
